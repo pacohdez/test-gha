@@ -1,3 +1,5 @@
+[![Deployment pipeline](https://github.com/pacohdez/test-gha/actions/workflows/pipeline.yml/badge.svg)](https://github.com/pacohdez/test-gha/actions/workflows/pipeline.yml)
+
 # Quasar App (test-gha)
 
 A Quasar Project
