@@ -44,9 +44,12 @@ jobs:
       - name: Sync Capacitor Android Project
         run: npx capacitor sync android
 
+      - name: Give execute permission to gradlew
+        run: chmod +x ./src-capacitor/android/gradlew
+
       - name: Build Android APK/AAB
-        working-directory: ./android
-        run: ./gradlew assembleRelease  # Usa Java 21 y Gradle
+        working-directory: ./src-capacitor/android
+        run: ./gradlew assembleRelease
 
       - name: Upload Artifact
         uses: actions/upload-artifact@v4
