@@ -29,6 +29,13 @@ jobs:
       - name: Give execute permission to gradlew
         run: chmod +x ./src-capacitor/android/gradlew
 
+      - name: Generate Keystore
+        working-directory: ./src-capacitor/android/app  # Genera el keystore en la carpeta correcta
+        env:
+          KEYSTORE_FILE: ${{ secrets.ANDROID_KEYSTORE }}
+        run: |
+          echo "$KEYSTORE_FILE" | base64 --decode > my-release-key.jks
+
       - name: Build Quasar App
         run: npx quasar build -m capacitor -T android
 
@@ -43,9 +50,6 @@ jobs:
 
       - name: Accept Android Licenses
         run: yes | sdkmanager --licenses
-
-      #- name: Verify Capacitor CLI Installation
-      #  run: npx capacitor --version
       
       - name: Sync Capacitor Android Project
         working-directory: ./src-capacitor
@@ -54,12 +58,10 @@ jobs:
       - name: Build Android APK/AAB
         working-directory: ./src-capacitor/android
         env:
-          KEYSTORE_FILE: ${{ secrets.ANDROID_KEYSTORE }}
           KEYSTORE_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
           KEY_ALIAS: ${{ secrets.ANDROID_KEY_ALIAS }}
           KEY_PASSWORD: ${{ secrets.ANDROID_KEY_PASSWORD }}
         run: |
-          echo "$KEYSTORE_FILE" > my-release-key.jks
           ./gradlew assembleRelease
 
       - name: Upload Artifact
