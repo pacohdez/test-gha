@@ -26,6 +26,16 @@ jobs:
       - name: Install dependencies
         run: npm install
 
+      - name: Debug Project Structure
+        run: ls -R ./src-capacitor/android
+
+      - name: Check Gradle Version
+        working-directory: ./src-capacitor/android
+        run: ./gradlew --version
+
+      - name: Check Environment Variables
+        run: printenv
+
       - name: Build Quasar App
         run: quasar build -m capacitor -T android --ide
 
