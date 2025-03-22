@@ -40,31 +40,31 @@ jobs:
       #  run: printenv
 
       - name: Build Quasar App
-        run: npx quasar build -m capacitor -T android --ide
+        run: npx quasar build -m capacitor -T android
 
-      - name: Setup Java 21
-        uses: actions/setup-java@v3
-        with:
-          java-version: '21'          # Versión LTS de Java 21
-          distribution: 'temurin'     # Distribución recomendada para Android
+      #- name: Setup Java 21
+      #  uses: actions/setup-java@v3
+      #  with:
+      #    java-version: '21'          # Versión LTS de Java 21
+      #    distribution: 'temurin'     # Distribución recomendada para Android
 
-      - name: Setup Android SDK
-        uses: android-actions/setup-android@v2
+      #- name: Setup Android SDK
+      #  uses: android-actions/setup-android@v2
 
-      - name: Accept Android Licenses
-        run: yes | sdkmanager --licenses
+      #- name: Accept Android Licenses
+      #  run: yes | sdkmanager --licenses
       
-      - name: Sync Capacitor Android Project
-        run: npx capacitor sync android
+      #- name: Sync Capacitor Android Project
+      #  run: npx capacitor sync android
 
-      - name: Build Android APK/AAB
-        working-directory: ./src-capacitor/android
-        run: ./gradlew assembleRelease
+      #- name: Build Android APK/AAB
+      #  working-directory: ./src-capacitor/android
+      #  run: ./gradlew assembleRelease
 
-      - name: Upload Artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: android-build
-          path: |
-            android/app/build/outputs/apk/release/*.apk
-            android/app/build/outputs/bundle/release/*.aab
+      #- name: Upload Artifact
+      #  uses: actions/upload-artifact@v4
+      #  with:
+      #    name: android-build
+      #    path: |
+      #      android/app/build/outputs/apk/release/*.apk
+      #      android/app/build/outputs/bundle/release/*.aab
