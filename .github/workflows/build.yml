@@ -43,8 +43,12 @@ jobs:
 
       - name: Accept Android Licenses
         run: yes | sdkmanager --licenses
+
+      - name: Verify Capacitor CLI Installation
+        run: npx capacitor --version
       
       - name: Sync Capacitor Android Project
+        working-directory: ./src-capacitor
         run: npx capacitor sync android
 
       - name: Build Android APK/AAB
