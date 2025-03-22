@@ -60,5 +60,5 @@ jobs:
         with:
           name: android-build
           path: |
-            android/app/build/outputs/apk/release/*.apk
-            android/app/build/outputs/bundle/release/*.aab
+            src-capacitor/android/app/build/outputs/apk/release/*.apk
+            src-capacitor/android/app/build/outputs/bundle/release/*.aab
