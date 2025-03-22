@@ -29,18 +29,18 @@ jobs:
       - name: Give execute permission to gradlew
         run: chmod +x ./src-capacitor/android/gradlew
 
-      - name: Debug Project Structure
-        run: ls -R ./src-capacitor/android
+      #- name: Debug Project Structure
+      #  run: ls -R ./src-capacitor/android
 
-      - name: Check Gradle Version
-        working-directory: ./src-capacitor/android
-        run: ./gradlew --version
+      #- name: Check Gradle Version
+      #  working-directory: ./src-capacitor/android
+      #  run: ./gradlew --version
 
-      - name: Check Environment Variables
-        run: printenv
+      #- name: Check Environment Variables
+      #  run: printenv
 
       - name: Build Quasar App
-        run: quasar build -m capacitor -T android --ide
+        run: npx quasar build -m capacitor -T android --ide
 
       - name: Setup Java 21
         uses: actions/setup-java@v3
