@@ -53,7 +53,14 @@ jobs:
 
       - name: Build Android APK/AAB
         working-directory: ./src-capacitor/android
-        run: ./gradlew assembleRelease
+        env:
+          KEYSTORE_FILE: ${{ secrets.ANDROID_KEYSTORE }}
+          KEYSTORE_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
+          KEY_ALIAS: ${{ secrets.ANDROID_KEY_ALIAS }}
+          KEY_PASSWORD: ${{ secrets.ANDROID_KEY_PASSWORD }}
+        run: |
+          echo "$KEYSTORE_FILE" > my-release-key.jks
+          ./gradlew assembleRelease
 
       - name: Upload Artifact
         uses: actions/upload-artifact@v4
