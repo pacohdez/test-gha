@@ -29,6 +29,13 @@ jobs:
       - name: Give execute permission to gradlew
         run: chmod +x ./src-capacitor/android/gradlew
 
+      - name: Generate Keystore
+        working-directory: ./src-capacitor/android/app
+        env:
+          KEYSTORE_FILE: ${{ secrets.ANDROID_KEYSTORE }}
+        run: |
+          echo "$KEYSTORE_FILE" | base64 --decode > my-release-key.jks
+
       - name: Build Quasar App
         env:
           KEYSTORE_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
@@ -51,13 +58,6 @@ jobs:
       - name: Sync Capacitor Android Project
         working-directory: ./src-capacitor
         run: npx capacitor sync android
-
-      - name: Generate Keystore
-        working-directory: ./src-capacitor/android/app
-        env:
-          KEYSTORE_FILE: ${{ secrets.ANDROID_KEYSTORE }}
-        run: |
-          echo "$KEYSTORE_FILE" | base64 --decode > my-release-key.jks
 
       - name: Build Android APK/AAB
         working-directory: ./src-capacitor/android
