@@ -29,14 +29,6 @@ jobs:
       - name: Give execute permission to gradlew
         run: chmod +x ./src-capacitor/android/gradlew
 
-      - name: Generate Keystore
-        working-directory: ./src-capacitor/android/app  # Genera el keystore en la carpeta correcta
-        env:
-          KEYSTORE_FILE: ${{ secrets.ANDROID_KEYSTORE }}
-        run: |
-          echo "$KEYSTORE_FILE" | base64 --decode > my-release-key.jks
-          ls -l
-
       - name: Build Quasar App
         env:
           KEYSTORE_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
@@ -60,16 +52,12 @@ jobs:
         working-directory: ./src-capacitor
         run: npx capacitor sync android
 
-      - name: Debug Environment Variables
-        working-directory: ./src-capacitor/android
+      - name: Generate Keystore
+        working-directory: ./src-capacitor/android/app
         env:
-          KEYSTORE_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
-          KEY_ALIAS: ${{ secrets.ANDROID_KEY_ALIAS }}
-          KEY_PASSWORD: ${{ secrets.ANDROID_KEY_PASSWORD }}
+          KEYSTORE_FILE: ${{ secrets.ANDROID_KEYSTORE }}
         run: |
-          echo "KEYSTORE_PASSWORD: $KEYSTORE_PASSWORD"
-          echo "KEY_ALIAS: $KEY_ALIAS"
-          echo "KEY_PASSWORD: $KEY_PASSWORD"
+          echo "$KEYSTORE_FILE" | base64 --decode > my-release-key.jks
 
       - name: Build Android APK/AAB
         working-directory: ./src-capacitor/android
@@ -78,7 +66,7 @@ jobs:
           KEY_ALIAS: ${{ secrets.ANDROID_KEY_ALIAS }}
           KEY_PASSWORD: ${{ secrets.ANDROID_KEY_PASSWORD }}
         run: |
-          ./gradlew assembleRelease --stacktrace
+          ./gradlew assembleRelease
 
       - name: Upload Artifact
         uses: actions/upload-artifact@v4
